@@ -26,6 +26,7 @@ import { saveOperation, getAllIndexedDevices } from '../services/storage';
 import { useNexus } from '../components/NexusProvider';
 import { CURRENCY } from '../constants';
 
+// FIXED: Defined sub-components OUTSIDE the main component to prevent focus loss during typing
 const GroupHeader = ({ icon: Icon, title, isDarkMode }: { icon: any, title: string, isDarkMode: boolean }) => (
   <div className="flex items-center gap-3 mb-6">
     <div className={`p-2 rounded-lg ${isDarkMode ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-600/10 text-blue-600'}`}>
@@ -87,13 +88,6 @@ const Deploy: React.FC = () => {
     setSpecs(data);
     setForm(prev => ({ ...prev, brand: data.brand || '' }));
     setLoading(false);
-  };
-
-  const handlePickFromIndex = (device: IndexedDevice) => {
-    setSpecs(device);
-    setForm(prev => ({ ...prev, brand: device.brand || '' }));
-    setImageLoaded(false);
-    setShowIndexPicker(false);
   };
 
   const handleDeploy = (e: React.FormEvent) => {

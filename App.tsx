@@ -9,6 +9,7 @@ import Timers from './pages/Timers';
 import Vault from './pages/Vault';
 import Login from './pages/Login';
 import NexusIndex from './pages/NexusIndex';
+import Core from './pages/Core';
 import { NexusProvider, useNexus } from './components/NexusProvider';
 
 const MainLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
@@ -26,7 +27,7 @@ const MainLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             <Route path="/active" element={<Timers />} />
             <Route path="/vault" element={<Vault />} />
             <Route path="/fiscal" element={<NexusIndex />} />
-            <Route path="/core" element={<div className="p-10 glass rounded-3xl text-center font-black">SYSTEM CORE MODULES - RESTRICTED</div>} />
+            <Route path="/core" element={<Core />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
@@ -44,7 +45,8 @@ const MainLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem('marwan_fon_auth') === 'true';
+    // Check for explicit session or the 'uplink' flag for persistent access
+    return localStorage.getItem('marwan_fon_auth') === 'true' || localStorage.getItem('marwan_fon_uplink') === 'true';
   });
 
   const handleLogin = () => {
@@ -55,6 +57,7 @@ const App: React.FC = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('marwan_fon_auth');
+    localStorage.removeItem('marwan_fon_uplink');
   };
 
   if (!isAuthenticated) {
