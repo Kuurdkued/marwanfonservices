@@ -1,0 +1,7 @@
+{
+  "name": "Marwan Fon Services - Internal Command Center",
+  "description": "An ultra-premium, private management system for high-end mobile phone services, featuring AI-powered device lookup and high-fidelity technical documentation.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
