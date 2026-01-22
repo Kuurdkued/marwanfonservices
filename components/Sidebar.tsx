@@ -17,12 +17,12 @@ const Sidebar: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { isDarkMode } = useNexus();
 
   const navItems = [
-    { to: "/", icon: LayoutGrid, label: "NEXUS" },
-    { to: "/deploy", icon: PlusCircle, label: "DEPLOY" },
-    { to: "/active", icon: Clock, label: "ACTIVE" },
-    { to: "/vault", icon: History, label: "VAULT" },
-    { to: "/fiscal", icon: TrendingUp, label: "FISCAL" },
-    { to: "/core", icon: Settings, label: "CORE" },
+    { to: "/", icon: LayoutGrid, label: "Dashboard" },
+    { to: "/deploy", icon: PlusCircle, label: "New Operation" },
+    { to: "/active", icon: Clock, label: "In Progress" },
+    { to: "/vault", icon: History, label: "Completed" },
+    { to: "/fiscal", icon: TrendingUp, label: "Monthly Income" },
+    { to: "/core", icon: Settings, label: "System Core" },
   ];
 
   return (
@@ -37,7 +37,8 @@ const Sidebar: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               className="w-full h-full object-contain"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement?.querySelector('.fallback')?.classList.remove('hidden');
+                const fallback = e.currentTarget.parentElement?.querySelector('.fallback');
+                if (fallback) fallback.classList.remove('hidden');
               }}
             />
             <div className="fallback hidden flex items-center justify-center">
@@ -63,12 +64,11 @@ const Sidebar: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                 : "text-slate-500 hover:text-white hover:bg-white/5"}
             `}
           >
-            {/* Fix: NavLink children must be a function to access isActive state within the children scope */}
             {({ isActive }) => (
               <>
                 <item.icon className={`w-5 h-5 transition-colors ${isActive ? 'text-blue-400' : 'group-hover:text-blue-400'}`} />
-                <span className="font-black text-[11px] tracking-widest">{item.label}</span>
-                {item.label === "NEXUS" && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>}
+                <span className="font-black text-[11px] tracking-widest uppercase">{item.label}</span>
+                {item.to === "/" && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>}
               </>
             )}
           </NavLink>
